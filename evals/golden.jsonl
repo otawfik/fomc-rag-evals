@@ -1,0 +1,108 @@
+{"id": "range-2021-01-27", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its January 27, 2021 meeting?", "doc_id": "fomc-2021-01-27", "gold": [0.0, 0.25]}
+{"id": "decision-2021-01-27", "kind": "decision", "question": "At the 2021-01-27 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2021-01-27", "gold": "hold"}
+{"id": "range-2021-03-17", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its March 17, 2021 meeting?", "doc_id": "fomc-2021-03-17", "gold": [0.0, 0.25]}
+{"id": "decision-2021-03-17", "kind": "decision", "question": "At the 2021-03-17 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2021-03-17", "gold": "hold"}
+{"id": "range-2021-04-28", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its April 28, 2021 meeting?", "doc_id": "fomc-2021-04-28", "gold": [0.0, 0.25]}
+{"id": "decision-2021-04-28", "kind": "decision", "question": "At the 2021-04-28 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2021-04-28", "gold": "hold"}
+{"id": "range-2021-06-16", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its June 16, 2021 meeting?", "doc_id": "fomc-2021-06-16", "gold": [0.0, 0.25]}
+{"id": "decision-2021-06-16", "kind": "decision", "question": "At the 2021-06-16 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2021-06-16", "gold": "hold"}
+{"id": "range-2021-07-28", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its July 28, 2021 meeting?", "doc_id": "fomc-2021-07-28", "gold": [0.0, 0.25]}
+{"id": "decision-2021-07-28", "kind": "decision", "question": "At the 2021-07-28 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2021-07-28", "gold": "hold"}
+{"id": "range-2021-09-22", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its September 22, 2021 meeting?", "doc_id": "fomc-2021-09-22", "gold": [0.0, 0.25]}
+{"id": "decision-2021-09-22", "kind": "decision", "question": "At the 2021-09-22 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2021-09-22", "gold": "hold"}
+{"id": "range-2021-11-03", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its November 3, 2021 meeting?", "doc_id": "fomc-2021-11-03", "gold": [0.0, 0.25]}
+{"id": "decision-2021-11-03", "kind": "decision", "question": "At the 2021-11-03 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2021-11-03", "gold": "hold"}
+{"id": "range-2021-12-15", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its December 15, 2021 meeting?", "doc_id": "fomc-2021-12-15", "gold": [0.0, 0.25]}
+{"id": "decision-2021-12-15", "kind": "decision", "question": "At the 2021-12-15 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2021-12-15", "gold": "hold"}
+{"id": "range-2022-01-26", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its January 26, 2022 meeting?", "doc_id": "fomc-2022-01-26", "gold": [0.0, 0.25]}
+{"id": "decision-2022-01-26", "kind": "decision", "question": "At the 2022-01-26 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2022-01-26", "gold": "hold"}
+{"id": "range-2022-03-16", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its March 16, 2022 meeting?", "doc_id": "fomc-2022-03-16", "gold": [0.25, 0.5]}
+{"id": "decision-2022-03-16", "kind": "decision", "question": "At the 2022-03-16 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2022-03-16", "gold": "raise"}
+{"id": "dissent-2022-03-16", "kind": "dissent", "question": "Who dissented at the FOMC meeting in March 2022?", "doc_id": "fomc-2022-03-16", "gold": ["James Bullard"]}
+{"id": "range-2022-05-04", "kind": "range", "question": "At the 2022-05-04 meeting, what was the federal funds rate target range after the FOMC's decision?", "doc_id": "fomc-2022-05-04", "gold": [0.75, 1.0]}
+{"id": "decision-2022-05-04", "kind": "decision", "question": "What policy action did the Committee take on the federal funds rate in May 2022?", "doc_id": "fomc-2022-05-04", "gold": "raise"}
+{"id": "range-2022-06-15", "kind": "range", "question": "At the 2022-06-15 meeting, what was the federal funds rate target range after the FOMC's decision?", "doc_id": "fomc-2022-06-15", "gold": [1.5, 1.75]}
+{"id": "decision-2022-06-15", "kind": "decision", "question": "What policy action did the Committee take on the federal funds rate in June 2022?", "doc_id": "fomc-2022-06-15", "gold": "raise"}
+{"id": "dissent-2022-06-15", "kind": "dissent", "question": "Who voted against the FOMC's policy action at its June 15, 2022 meeting?", "doc_id": "fomc-2022-06-15", "gold": ["Esther L. George"]}
+{"id": "range-2022-07-27", "kind": "range", "question": "Where did the Fed put the federal funds target range in July 2022?", "doc_id": "fomc-2022-07-27", "gold": [2.25, 2.5]}
+{"id": "decision-2022-07-27", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its July 27, 2022 meeting?", "doc_id": "fomc-2022-07-27", "gold": "raise"}
+{"id": "range-2022-09-21", "kind": "range", "question": "Where did the Fed put the federal funds target range in September 2022?", "doc_id": "fomc-2022-09-21", "gold": [3.0, 3.25]}
+{"id": "decision-2022-09-21", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its September 21, 2022 meeting?", "doc_id": "fomc-2022-09-21", "gold": "raise"}
+{"id": "range-2022-11-02", "kind": "range", "question": "Where did the Fed put the federal funds target range in November 2022?", "doc_id": "fomc-2022-11-02", "gold": [3.75, 4.0]}
+{"id": "decision-2022-11-02", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its November 2, 2022 meeting?", "doc_id": "fomc-2022-11-02", "gold": "raise"}
+{"id": "range-2022-12-14", "kind": "range", "question": "Where did the Fed put the federal funds target range in December 2022?", "doc_id": "fomc-2022-12-14", "gold": [4.25, 4.5]}
+{"id": "decision-2022-12-14", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its December 14, 2022 meeting?", "doc_id": "fomc-2022-12-14", "gold": "raise"}
+{"id": "range-2023-02-01", "kind": "range", "question": "Where did the Fed put the federal funds target range in February 2023?", "doc_id": "fomc-2023-02-01", "gold": [4.5, 4.75]}
+{"id": "decision-2023-02-01", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its February 1, 2023 meeting?", "doc_id": "fomc-2023-02-01", "gold": "raise"}
+{"id": "range-2023-03-22", "kind": "range", "question": "Where did the Fed put the federal funds target range in March 2023?", "doc_id": "fomc-2023-03-22", "gold": [4.75, 5.0]}
+{"id": "decision-2023-03-22", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its March 22, 2023 meeting?", "doc_id": "fomc-2023-03-22", "gold": "raise"}
+{"id": "range-2023-05-03", "kind": "range", "question": "Where did the Fed put the federal funds target range in May 2023?", "doc_id": "fomc-2023-05-03", "gold": [5.0, 5.25]}
+{"id": "decision-2023-05-03", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its May 3, 2023 meeting?", "doc_id": "fomc-2023-05-03", "gold": "raise"}
+{"id": "range-2023-06-14", "kind": "range", "question": "Where did the Fed put the federal funds target range in June 2023?", "doc_id": "fomc-2023-06-14", "gold": [5.0, 5.25]}
+{"id": "decision-2023-06-14", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its June 14, 2023 meeting?", "doc_id": "fomc-2023-06-14", "gold": "hold"}
+{"id": "range-2023-07-26", "kind": "range", "question": "Where did the Fed put the federal funds target range in July 2023?", "doc_id": "fomc-2023-07-26", "gold": [5.25, 5.5]}
+{"id": "decision-2023-07-26", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its July 26, 2023 meeting?", "doc_id": "fomc-2023-07-26", "gold": "raise"}
+{"id": "range-2023-09-20", "kind": "range", "question": "Where did the Fed put the federal funds target range in September 2023?", "doc_id": "fomc-2023-09-20", "gold": [5.25, 5.5]}
+{"id": "decision-2023-09-20", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its September 20, 2023 meeting?", "doc_id": "fomc-2023-09-20", "gold": "hold"}
+{"id": "range-2023-11-01", "kind": "range", "question": "Where did the Fed put the federal funds target range in November 2023?", "doc_id": "fomc-2023-11-01", "gold": [5.25, 5.5]}
+{"id": "decision-2023-11-01", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its November 1, 2023 meeting?", "doc_id": "fomc-2023-11-01", "gold": "hold"}
+{"id": "range-2023-12-13", "kind": "range", "question": "Where did the Fed put the federal funds target range in December 2023?", "doc_id": "fomc-2023-12-13", "gold": [5.25, 5.5]}
+{"id": "decision-2023-12-13", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its December 13, 2023 meeting?", "doc_id": "fomc-2023-12-13", "gold": "hold"}
+{"id": "range-2024-01-31", "kind": "range", "question": "Where did the Fed put the federal funds target range in January 2024?", "doc_id": "fomc-2024-01-31", "gold": [5.25, 5.5]}
+{"id": "decision-2024-01-31", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its January 31, 2024 meeting?", "doc_id": "fomc-2024-01-31", "gold": "hold"}
+{"id": "range-2024-03-20", "kind": "range", "question": "Where did the Fed put the federal funds target range in March 2024?", "doc_id": "fomc-2024-03-20", "gold": [5.25, 5.5]}
+{"id": "decision-2024-03-20", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its March 20, 2024 meeting?", "doc_id": "fomc-2024-03-20", "gold": "hold"}
+{"id": "range-2024-05-01", "kind": "range", "question": "Where did the Fed put the federal funds target range in May 2024?", "doc_id": "fomc-2024-05-01", "gold": [5.25, 5.5]}
+{"id": "decision-2024-05-01", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its May 1, 2024 meeting?", "doc_id": "fomc-2024-05-01", "gold": "hold"}
+{"id": "range-2024-06-12", "kind": "range", "question": "Where did the Fed put the federal funds target range in June 2024?", "doc_id": "fomc-2024-06-12", "gold": [5.25, 5.5]}
+{"id": "decision-2024-06-12", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its June 12, 2024 meeting?", "doc_id": "fomc-2024-06-12", "gold": "hold"}
+{"id": "range-2024-07-31", "kind": "range", "question": "Where did the Fed put the federal funds target range in July 2024?", "doc_id": "fomc-2024-07-31", "gold": [5.25, 5.5]}
+{"id": "decision-2024-07-31", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its July 31, 2024 meeting?", "doc_id": "fomc-2024-07-31", "gold": "hold"}
+{"id": "range-2024-09-18", "kind": "range", "question": "Where did the Fed put the federal funds target range in September 2024?", "doc_id": "fomc-2024-09-18", "gold": [4.75, 5.0]}
+{"id": "decision-2024-09-18", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its September 18, 2024 meeting?", "doc_id": "fomc-2024-09-18", "gold": "lower"}
+{"id": "dissent-2024-09-18", "kind": "dissent", "question": "At the 2024-09-18 meeting, which members dissented from the FOMC decision?", "doc_id": "fomc-2024-09-18", "gold": ["Michelle W. Bowman"]}
+{"id": "range-2024-11-07", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its November 7, 2024 meeting?", "doc_id": "fomc-2024-11-07", "gold": [4.5, 4.75]}
+{"id": "decision-2024-11-07", "kind": "decision", "question": "At the 2024-11-07 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2024-11-07", "gold": "lower"}
+{"id": "range-2024-12-18", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its December 18, 2024 meeting?", "doc_id": "fomc-2024-12-18", "gold": [4.25, 4.5]}
+{"id": "decision-2024-12-18", "kind": "decision", "question": "At the 2024-12-18 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2024-12-18", "gold": "lower"}
+{"id": "dissent-2024-12-18", "kind": "dissent", "question": "Who dissented at the FOMC meeting in December 2024?", "doc_id": "fomc-2024-12-18", "gold": ["Beth M. Hammack"]}
+{"id": "range-2025-01-29", "kind": "range", "question": "At the 2025-01-29 meeting, what was the federal funds rate target range after the FOMC's decision?", "doc_id": "fomc-2025-01-29", "gold": [4.25, 4.5]}
+{"id": "decision-2025-01-29", "kind": "decision", "question": "What policy action did the Committee take on the federal funds rate in January 2025?", "doc_id": "fomc-2025-01-29", "gold": "hold"}
+{"id": "range-2025-03-19", "kind": "range", "question": "At the 2025-03-19 meeting, what was the federal funds rate target range after the FOMC's decision?", "doc_id": "fomc-2025-03-19", "gold": [4.25, 4.5]}
+{"id": "decision-2025-03-19", "kind": "decision", "question": "What policy action did the Committee take on the federal funds rate in March 2025?", "doc_id": "fomc-2025-03-19", "gold": "hold"}
+{"id": "dissent-2025-03-19", "kind": "dissent", "question": "Who voted against the FOMC's policy action at its March 19, 2025 meeting?", "doc_id": "fomc-2025-03-19", "gold": ["Christopher J. Waller"]}
+{"id": "range-2025-05-07", "kind": "range", "question": "Where did the Fed put the federal funds target range in May 2025?", "doc_id": "fomc-2025-05-07", "gold": [4.25, 4.5]}
+{"id": "decision-2025-05-07", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its May 7, 2025 meeting?", "doc_id": "fomc-2025-05-07", "gold": "hold"}
+{"id": "range-2025-06-18", "kind": "range", "question": "Where did the Fed put the federal funds target range in June 2025?", "doc_id": "fomc-2025-06-18", "gold": [4.25, 4.5]}
+{"id": "decision-2025-06-18", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its June 18, 2025 meeting?", "doc_id": "fomc-2025-06-18", "gold": "hold"}
+{"id": "range-2025-07-30", "kind": "range", "question": "Where did the Fed put the federal funds target range in July 2025?", "doc_id": "fomc-2025-07-30", "gold": [4.25, 4.5]}
+{"id": "decision-2025-07-30", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its July 30, 2025 meeting?", "doc_id": "fomc-2025-07-30", "gold": "hold"}
+{"id": "dissent-2025-07-30", "kind": "dissent", "question": "At the 2025-07-30 meeting, which members dissented from the FOMC decision?", "doc_id": "fomc-2025-07-30", "gold": ["Michelle W. Bowman", "Christopher J. Waller"]}
+{"id": "range-2025-09-17", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its September 17, 2025 meeting?", "doc_id": "fomc-2025-09-17", "gold": [4.0, 4.25]}
+{"id": "decision-2025-09-17", "kind": "decision", "question": "At the 2025-09-17 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2025-09-17", "gold": "lower"}
+{"id": "dissent-2025-09-17", "kind": "dissent", "question": "Who dissented at the FOMC meeting in September 2025?", "doc_id": "fomc-2025-09-17", "gold": ["Stephen I. Miran"]}
+{"id": "range-2025-10-29", "kind": "range", "question": "At the 2025-10-29 meeting, what was the federal funds rate target range after the FOMC's decision?", "doc_id": "fomc-2025-10-29", "gold": [3.75, 4.0]}
+{"id": "decision-2025-10-29", "kind": "decision", "question": "What policy action did the Committee take on the federal funds rate in October 2025?", "doc_id": "fomc-2025-10-29", "gold": "lower"}
+{"id": "dissent-2025-10-29", "kind": "dissent", "question": "Who voted against the FOMC's policy action at its October 29, 2025 meeting?", "doc_id": "fomc-2025-10-29", "gold": ["Stephen I. Miran"]}
+{"id": "range-2025-12-10", "kind": "range", "question": "Where did the Fed put the federal funds target range in December 2025?", "doc_id": "fomc-2025-12-10", "gold": [3.5, 3.75]}
+{"id": "decision-2025-12-10", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its December 10, 2025 meeting?", "doc_id": "fomc-2025-12-10", "gold": "lower"}
+{"id": "dissent-2025-12-10", "kind": "dissent", "question": "At the 2025-12-10 meeting, which members dissented from the FOMC decision?", "doc_id": "fomc-2025-12-10", "gold": ["Stephen I. Miran"]}
+{"id": "range-2026-01-28", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its January 28, 2026 meeting?", "doc_id": "fomc-2026-01-28", "gold": [3.5, 3.75]}
+{"id": "decision-2026-01-28", "kind": "decision", "question": "At the 2026-01-28 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2026-01-28", "gold": "hold"}
+{"id": "dissent-2026-01-28", "kind": "dissent", "question": "Who dissented at the FOMC meeting in January 2026?", "doc_id": "fomc-2026-01-28", "gold": ["Stephen I. Miran", "Christopher J. Waller"]}
+{"id": "range-2026-03-18", "kind": "range", "question": "At the 2026-03-18 meeting, what was the federal funds rate target range after the FOMC's decision?", "doc_id": "fomc-2026-03-18", "gold": [3.5, 3.75]}
+{"id": "decision-2026-03-18", "kind": "decision", "question": "What policy action did the Committee take on the federal funds rate in March 2026?", "doc_id": "fomc-2026-03-18", "gold": "hold"}
+{"id": "dissent-2026-03-18", "kind": "dissent", "question": "Who voted against the FOMC's policy action at its March 18, 2026 meeting?", "doc_id": "fomc-2026-03-18", "gold": ["Stephen I. Miran"]}
+{"id": "range-2026-04-29", "kind": "range", "question": "Where did the Fed put the federal funds target range in April 2026?", "doc_id": "fomc-2026-04-29", "gold": [3.5, 3.75]}
+{"id": "decision-2026-04-29", "kind": "decision", "question": "What did the FOMC decide to do with the federal funds rate target range at its April 29, 2026 meeting?", "doc_id": "fomc-2026-04-29", "gold": "hold"}
+{"id": "dissent-2026-04-29", "kind": "dissent", "question": "At the 2026-04-29 meeting, which members dissented from the FOMC decision?", "doc_id": "fomc-2026-04-29", "gold": ["Stephen I. Miran"]}
+{"id": "range-2026-06-17", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its June 17, 2026 meeting?", "doc_id": "fomc-2026-06-17", "gold": [3.5, 3.75]}
+{"id": "decision-2026-06-17", "kind": "decision", "question": "At the 2026-06-17 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2026-06-17", "gold": "hold"}
+{"id": "range-2026-07-29", "kind": "range", "question": "What target range for the federal funds rate did the FOMC set at its July 29, 2026 meeting?", "doc_id": "fomc-2026-07-29", "gold": [3.5, 3.75]}
+{"id": "decision-2026-07-29", "kind": "decision", "question": "At the 2026-07-29 meeting, did the Fed raise, cut or hold the federal funds rate?", "doc_id": "fomc-2026-07-29", "gold": "hold"}
+{"id": "dissent-2026-07-29", "kind": "dissent", "question": "Who dissented at the FOMC meeting in July 2026?", "doc_id": "fomc-2026-07-29", "gold": ["Beth M. Hammack", "Neel Kashkari", "Lorie K. Logan"]}
+{"id": "range-2026-09-16", "kind": "range", "question": "At the 2026-09-16 meeting, what was the federal funds rate target range after the FOMC's decision?", "doc_id": "fomc-2026-09-16", "gold": [3.75, 4.0]}
+{"id": "decision-2026-09-16", "kind": "decision", "question": "What policy action did the Committee take on the federal funds rate in September 2026?", "doc_id": "fomc-2026-09-16", "gold": "raise"}
+{"id": "range-2026-10-28", "kind": "range", "question": "At the 2026-10-28 meeting, what was the federal funds rate target range after the FOMC's decision?", "doc_id": "fomc-2026-10-28", "gold": [3.75, 4.0]}
+{"id": "decision-2026-10-28", "kind": "decision", "question": "What policy action did the Committee take on the federal funds rate in October 2026?", "doc_id": "fomc-2026-10-28", "gold": "hold"}
+{"id": "dissent-2026-10-28", "kind": "dissent", "question": "Who voted against the FOMC's policy action at its October 28, 2026 meeting?", "doc_id": "fomc-2026-10-28", "gold": ["Lisa D. Cook", "Beth M. Hammack"]}

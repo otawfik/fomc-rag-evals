@@ -1,0 +1,45 @@
+{
+  "docs": 47,
+  "chunks": 242,
+  "answerer": "extractive",
+  "store": "ChromaStore",
+  "naive": {
+    "n": 108,
+    "hit@1": 0.287,
+    "hit@5": 0.546,
+    "mrr": 0.376,
+    "accuracy": 0.306,
+    "accuracy_decision": 0.34,
+    "accuracy_dissent": 0.429,
+    "accuracy_range": 0.234,
+    "cited_right": 0.241,
+    "p50_ms": 110.0,
+    "p95_ms": 138.8
+  },
+  "agent": {
+    "n": 108,
+    "hit@1": 1.0,
+    "hit@5": 1.0,
+    "mrr": 1.0,
+    "accuracy": 1.0,
+    "accuracy_decision": 1.0,
+    "accuracy_dissent": 1.0,
+    "accuracy_range": 1.0,
+    "cited_right": 1.0,
+    "p50_ms": 74.2,
+    "p95_ms": 123.8
+  },
+  "heldout": {
+    "n": 12,
+    "hit@1": 1.0,
+    "hit@5": 1.0,
+    "mrr": 1.0,
+    "accuracy": 0.583,
+    "accuracy_decision": 0.5,
+    "accuracy_dissent": 0.75,
+    "accuracy_range": 0.5,
+    "cited_right": 1.0,
+    "p50_ms": 77.6,
+    "p95_ms": 93.7
+  }
+}

@@ -1,0 +1,85 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+env:
+  HF_HUB_DISABLE_PROGRESS_BARS: "1"
+
+jobs:
+  eval-chroma:
+    name: tests + eval gate (Chroma)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-${{ hashFiles('fomc/store.py', 'fomc/llm.py') }}
+      - run: pip install -r requirements.txt
+      - name: unit tests
+        run: pytest -q
+      - name: end-to-end API test
+        run: pytest -q -m slow
+      - name: eval gate (fails the build if answer quality drops)
+        run: python -m evals.run --check
+      - name: publish the scores
+        if: always()
+        run: cat evals/REPORT.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-report-chroma
+          path: |
+            evals/report.json
+            evals/REPORT.md
+            evals/answers.jsonl
+
+  eval-pgvector:
+    name: eval gate (Postgres + pgvector)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-${{ hashFiles('fomc/store.py', 'fomc/llm.py') }}
+      - run: pip install -r requirements.txt
+      - name: eval gate on pgvector
+        run: python -m evals.run --check
+      - name: publish the scores
+        if: always()
+        run: cat evals/REPORT.md >> "$GITHUB_STEP_SUMMARY"
+
+  docker:
+    name: docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: fomc-rag-evals:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

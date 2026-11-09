@@ -1,0 +1,11 @@
+{
+  "hit@1": 0.98,
+  "cited_right": 0.98,
+  "accuracy": 0.97,
+  "accuracy_range": 0.95,
+  "accuracy_decision": 0.95,
+  "accuracy_dissent": 0.95,
+  "heldout_hit@1": 0.9,
+  "heldout_accuracy": 0.5,
+  "p95_ms": 3000
+}

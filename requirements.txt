@@ -1,0 +1,16 @@
+# CPU-only torch on Linux (CI, Docker): the default wheel bundles CUDA and is ~2 GB larger
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.5
+transformers>=4.46
+sentence-transformers>=3.3
+chromadb>=0.5
+langgraph>=0.2
+fastapi>=0.115
+uvicorn>=0.32
+requests>=2.32
+psycopg[binary]>=3.2
+pgvector>=0.3
+boto3>=1.35
+numpy>=1.26
+pytest>=8
+httpx>=0.27
