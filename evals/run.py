@@ -86,10 +86,14 @@ def markdown(report: dict) -> str:
              "| metric | naive RAG | agent |", "|---|---|---|"]
     for k in keys:
         lines.append(f"| {k} | {report['naive'].get(k, '')} | {report['agent'][k]} |")
-    if report.get("heldout"):
-        h = report["heldout"]
-        lines += ["", f"Held-out phrasings ({h['n']} hand-written questions the templates never use): "
-                  f"accuracy {h['accuracy']}, hit@1 {h['hit@1']}, cited_right {h['cited_right']}."]
+    for key, what in (("heldout", "Held-out phrasings, the original set"),
+                      ("heldout_expanded", "Held-out phrasings, expanded set (includes the original)"),
+                      ("dev", "Dev set (the router was tuned on this one, so it flatters)")):
+        if report.get(key):
+            h = report[key]
+            kinds = " / ".join(f"{k[9:]} {v}" for k, v in h.items() if k.startswith("accuracy_"))
+            lines += ["", f"{what}, {h['n']} hand-written questions: accuracy {h['accuracy']} ({kinds}), "
+                      f"hit@1 {h['hit@1']}, cited_right {h['cited_right']}."]
     return "\n".join(lines) + "\n"
 
 
@@ -115,23 +119,26 @@ def main() -> int:
         rows[name] = [fn(it["question"]) for it in items]
         report[name] = score(rows[name], items)
     # held-out phrasings: reported separately, so tuning on the golden templates can't hide overfitting
-    from .heldout import items as heldout_items
+    from .dev import items as dev_items
+    from .heldout import expanded, items as heldout_items
 
-    held = heldout_items()
-    held_rows = [agent.ask(it["question"]) for it in held]
-    report["heldout"] = score(held_rows, held)
+    extra_rows = []
+    for key, its in (("heldout", heldout_items()), ("heldout_expanded", expanded()), ("dev", dev_items())):
+        got = [agent.ask(it["question"]) for it in its]
+        report[key] = score(got, its)
+        extra_rows += [{**r, "id": it["id"], "set": key, "gold": it["gold"]} for r, it in zip(got, its) if key != "heldout"]
     if os.environ.get("JUDGE") == "bedrock":
         report["agent"]["judge_correct"] = judge(rows["agent"], items)
 
     (HERE / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     (HERE / "REPORT.md").write_text(markdown(report))
-    (HERE / "answers.jsonl").write_text("".join(json.dumps({**r, "id": it["id"], "gold": it["gold"]}) + "\n" for r, it in zip(rows["agent"], items)))
+    (HERE / "answers.jsonl").write_text("".join(json.dumps({**r, "id": it["id"], "gold": it["gold"]}) + "\n" for r, it in zip(rows["agent"], items)) + "".join(json.dumps(r) + "\n" for r in extra_rows))
     print(markdown(report))
 
     if args.check:
         th = json.loads((HERE / "thresholds.json").read_text())
         # "heldout_accuracy" reads report["heldout"]["accuracy"]; everything else reads the agent's golden scores
-        got = {**report["agent"], **{f"heldout_{k}": v for k, v in report["heldout"].items()}}
+        got = {**report["agent"], **{f"{name}_{k}": v for name in ("heldout", "heldout_expanded", "dev") for k, v in report[name].items()}}
         bad = [f"{k}: {got[k]} < {v}" for k, v in th.items() if not k.endswith("_ms") and got[k] < v]
         bad += [f"{k}: {got[k]} > {v}" for k, v in th.items() if k.endswith("_ms") and got[k] > v]
         if bad:
