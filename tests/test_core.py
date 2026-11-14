@@ -2,7 +2,8 @@
 import pytest
 
 from evals.golden import answer_decision, answer_range, correct
-from fomc.agent import intent, resolve_dates
+from fomc import router
+from fomc.agent import intent, resolve_dates, route
 from fomc.ingest import decision, dissents, parse_range, rate
 from fomc.llm import sentence
 
@@ -59,6 +60,48 @@ def test_resolve_dates(q, dates, scope):
 ])
 def test_intent(q, kind):
     assert intent(q)[0] == kind
+
+
+@pytest.mark.parametrize("q,bare", [
+    ("Did the Fed cut in Dec. 2024?", "Did the Fed cut in ?"),
+    ("What was the range on 2023-07-26?", "What was the range on ?"),
+    ("Who dissented at the July 30, 2025 meeting?", "Who dissented at the meeting?"),
+    ("fed funds after the sept 17 2025 meeting", "fed funds after the meeting"),
+    ("What may the Committee do?", "What the Committee do?"),  # "may" goes too: harmless, it's only the router's view
+])
+def test_strip_dates(q, bare):
+    assert router.strip_dates(q) == bare
+
+
+def _fake_scores(monkeypatch, **s):
+    monkeypatch.setattr(router, "scores", lambda q: {"range": 0.0, "decision": 0.0, "dissent": 0.0, "other": 0.0, **s})
+
+
+def test_route_trusts_a_confident_semantic_match(monkeypatch):
+    _fake_scores(monkeypatch, dissent=0.8, decision=0.6)
+    kind, ask, how = route("Did anyone push back on the hold?")  # keyword router alone says "decision"
+    assert (kind, ask, how) == ("dissent", "Who voted against the action?", "semantic")
+
+
+def test_route_falls_back_to_keywords_when_unsure(monkeypatch):
+    _fake_scores(monkeypatch, dissent=0.80, other=0.79)  # too close to call
+    assert route("Who dissented?")[::2] == ("dissent", "keyword")
+    _fake_scores(monkeypatch, dissent=0.5)  # clear winner, but not similar enough to anything
+    assert route("What target range did the FOMC set?")[::2] == ("range", "keyword")
+
+
+def test_route_ignores_a_close_call_between_range_and_decision(monkeypatch):
+    _fake_scores(monkeypatch, range=0.80, decision=0.79, other=0.6)  # same sentence answers both
+    assert route("Where did rates end up?")[::2] == ("range", "semantic")
+
+
+def test_route_other_keeps_the_users_question(monkeypatch):
+    _fake_scores(monkeypatch, other=0.9)
+    assert route("What did the statement say about inflation?") == ("other", "What did the statement say about inflation?", "semantic")
+
+
+def test_route_can_be_switched_off():
+    assert route("Did the Fed raise, cut or hold?", semantic=False)[::2] == ("decision", "keyword")
 
 
 def test_sentence_keeps_initials_together():

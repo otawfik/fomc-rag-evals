@@ -16,3 +16,16 @@ def test_ask_end_to_end():
         assert r["sources"][0]["url"].startswith("https://www.federalreserve.gov/")
         bad = c.post("/ask", json={"question": "?"})
         assert bad.status_code == 422
+
+
+@pytest.mark.parametrize("q,kind", [
+    ("Who voted against?", "dissent"),
+    ("Did the Fed raise or lower rates?", "decision"),
+    ("What is the federal funds rate?", "range"),
+    ("What did the statement say about the labor market?", "other"),
+])
+def test_semantic_router_with_the_real_model(q, kind):
+    from fomc import router
+
+    got, score, margin = router.route(q)
+    assert got == kind and score >= router.FLOOR and margin >= router.MARGIN
