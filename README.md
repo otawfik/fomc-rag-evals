@@ -14,8 +14,9 @@ LLM-as-judge) · FastAPI · Docker · GitHub Actions
 
 ## Results
 
-108 golden questions over 47 statements (242 chunks), plus 12 hand-written held-out questions. From
-`evals/report.json`; CI recomputes these on every push, on Chroma and on pgvector.
+108 golden questions over 47 statements (242 chunks), plus 37 hand-written held-out questions (the
+original 12 and 25 added later). From `evals/report.json`; CI recomputes these on every push, on
+Chroma and on pgvector.
 
 | | naive RAG | agent |
 |---|---|---|
@@ -24,25 +25,50 @@ LLM-as-judge) · FastAPI · Docker · GitHub Actions
 | answer correct | 30.6% | **100%** |
 | ↳ target range / decision / dissenters | 23.4% / 34.0% / 42.9% | 100% / 100% / 100% |
 | answer cites the right statement | 24.1% | **100%** |
-| latency p50 / p95 (CPU, M-series laptop) | 112 / 128 ms | 78 / 112 ms |
-| **held-out phrasings**, answer correct | 25.0% | **58.3%** (retrieval and citations still 100%) |
+| latency p50 / p95 (CPU, M-series laptop) | 182 / 226 ms | 141 / 241 ms |
+| **held-out phrasings, original 12**, answer correct | 25.0% | **91.7%** (11 of 12) |
+| **held-out phrasings, all 37**, answer correct | 13.5% | **81.1%** (30 of 37) |
 
-The held-out number is the honest one. The golden questions come from templates; the 12 held-out ones
+The held-out numbers are the honest ones. The golden questions come from templates; the held-out ones
 are phrased differently ("did rates go up, down or stay put", "who were the no votes") and are never
-tuned on. The agent still finds and cites the right statement every time; where it misses, the keyword
-intent router didn't recognise the phrasing (see Limitations).
+tuned on. On the 37, the agent retrieves and cites the right statement 36 times; the other is a date
+the resolver can't read ("the last meeting of 2023").
+
+**Semantic routing moved held-out from 58.3% to 91.7% on the original 12.** Before it, the keyword
+intent router didn't recognise most paraphrases. Now the question is embedded and compared with
+example questions per intent, with the keyword router as the fallback (`fomc/router.py`). Golden
+stayed at 100%. How that number was kept honest:
+
+- The router was tuned on a separate dev set (`evals/dev.py`, 30 paraphrases, 46.7% → 96.7%). That
+  number flatters, since the examples and thresholds were chosen with it in view.
+- The 25 new held-out questions were written and committed before the router existed (the git history
+  shows the order), and the held-out sets were scored once, after tuning was finished.
+- A caveat: the dev and held-out questions were written by the same author at the same time, so
+  they share habits of phrasing. Questions from real users would be a harder test than either.
+- 37 questions is a small sample: one question is 2.7 points, and the 95% interval around 81% runs
+  from roughly 66% to 91%.
+
+The latency row was re-measured on a slower day for the laptop (naive RAG, which this change doesn't
+touch, went from 112 to 182 ms p50). Measured back to back, the semantic router adds about 12 ms per
+question: one extra embedding of the question.
 
 ### What moved the numbers
 
 Each row adds one step to the one above (`python -m evals.ablation`):
 
-| pipeline | golden | held-out |
-|---|---|---|
-| vector search only (naive RAG) | 30.6% | 25.0% |
-| + resolve the meeting date, filter retrieval | 74.1% | 41.7% |
-| + cross-encoder rerank | 84.3% | 50.0% |
-| + intent routing, canonical question for the reader | 88.9% | 50.0% |
-| + keep the voting roll out of range/decision answers | **100%** | **58.3%** |
+| pipeline | golden (108) | held-out, original 12 | held-out, all 37 | dev (30, tuned on) |
+|---|---|---|---|---|
+| vector search only (naive RAG) | 30.6% | 25.0% | 13.5% | 10.0% |
+| + resolve the meeting date, filter retrieval | 74.1% | 41.7% | 29.7% | 33.3% |
+| + cross-encoder rerank | 84.3% | 50.0% | 43.2% | 53.3% |
+| + keyword intent routing, canonical question for the reader | 88.9% | 50.0% | 48.6% | 53.3% |
+| + keep the voting roll out of range/decision answers | **100%** | 58.3% | 48.6% | 46.7% |
+| + semantic intent routing, keywords as the fallback | **100%** | **91.7%** | **81.1%** | 96.7% |
+
+The voting-roll rule is what takes the golden set to 100%, but it only fires when the intent is known,
+so on paraphrases the keyword router mislabels its effect is mixed (the original 12 gain one question,
+dev loses two). Semantic routing is the step that makes the earlier ones apply to questions outside the
+templates.
 
 **Why naive RAG fails here:** FOMC statements are near-identical boilerplate from meeting to meeting.
 Embedding similarity can't tell *December 2024* from *January 2024*, so plain vector search retrieves a
@@ -59,13 +85,17 @@ decided*.
 question ─► resolve ─► retrieve ─► grade ─┬─► rerank ─► answer ─► verify ─► answer + citation
              │            ▲                │
              │            └──── widen ◄────┘  nothing relevant: widen to the month, then drop the filter
-             └ intent (range / decision / dissent / other) and the meeting date(s)
+             └ intent (range / decision / dissent / other): by meaning, keywords as the fallback; and the meeting date(s)
 ```
 
 A LangGraph state machine (`fomc/agent.py`):
 
 - **resolve** parses the meeting out of the question ("December 18, 2024", "2024-12-18", "March
-  2022", a year) against the meetings actually indexed, and routes on intent.
+  2022", a year) against the meetings actually indexed, and routes on intent. The router
+  (`fomc/router.py`) strips the date words, embeds what's left with the retriever's bge-small model and
+  compares it with six example questions per intent. The closest intent wins if it is similar enough
+  and clearly ahead of the runner-up; otherwise the keyword router decides. A close call between
+  *range* and *decision* is accepted, because the same sentence answers both.
 - **retrieve** is vector search with bge-small-en-v1.5 embeddings, filtered to that meeting: a
   metadata `where` in Chroma, a `WHERE date = ANY(...)` in pgvector.
 - **grade** drops chunks below a similarity floor. If none survive, **widen** relaxes the filter and
@@ -82,8 +112,12 @@ A LangGraph state machine (`fomc/agent.py`):
   lower / hold) and every dissenter. The answers are **parsed from the documents**, not typed by hand,
   so the set grows with each new meeting. Three phrasings per question type and three ways of naming
   the meeting.
-- **Held-out set** (`evals/heldout.py`): 12 hand-written questions in phrasings the templates don't
-  use. Scored and gated separately.
+- **Held-out set** (`evals/heldout.py`): 37 hand-written questions in phrasings the templates don't
+  use: the original 12, frozen so the number stays comparable, and 25 written before the semantic
+  router existed. Scored and gated separately, and reported both ways.
+- **Dev set** (`evals/dev.py`): 30 more paraphrases, plus 8 questions that are none of the three
+  kinds. The only set the router is tuned on. `python -m evals.dev -v` shows every routing decision
+  with its score and margin.
 - **Scoring:** ranges must match exactly, whether written as Fed fractions ("4-1/4 to 4-1/2 percent")
   or decimals ("4.25% to 4.5%"); decisions are classified from the answer; every dissenter must be
   named. Plus hit@1/hit@5/MRR, citation correctness and p50/p95 latency.
@@ -109,6 +143,7 @@ python -m fomc.ingest          # refresh data/statements.jsonl from federalreser
 python -m evals.golden         # rebuild the golden set from the statements
 python -m evals.run --check    # score naive vs agent, enforce the thresholds
 python -m evals.ablation       # the "what moved the numbers" table
+python -m evals.dev -v         # the router on the dev set: keyword vs semantic, every decision
 pytest -q && pytest -q -m slow # unit tests; end-to-end API test
 
 uvicorn fomc.api:app --port 8000
@@ -141,9 +176,25 @@ curl -s localhost:8000/ask -H 'content-type: application/json' \
 
 ## Limitations
 
-- **Intent routing is keyword-based.** Paraphrases it doesn't know fall through to "other" (held-out
-  58%). The next step is semantic routing: embed the question and compare it with intent
-  descriptions.
+- **Seven of the 37 held-out questions still fail**, for four different reasons:
+  - *The router isn't confident and the keyword fallback is wrong (4).* "fed funds corridor", "what
+    band is the overnight rate supposed to trade in" and "whose votes went the other way" fall back to
+    keywords and land on "other". "Who was the lone holdout" falls back and the keyword router sees
+    "hold" and calls it a decision. Six examples per intent don't cover market slang.
+  - *The router is confident and wrong (1).* "Did the Committee pause or keep hiking?" is routed to
+    dissent. The same happens to one dev question ("Was April 2021 a no-move meeting?"). Short
+    questions about a hold have little for the embedding to go on.
+  - *Routed correctly, wrong paragraph retrieved (1).* "Did the central bank ease?" is routed to
+    decision, but retrieval inside the statement still searches with the user's words, and the
+    decision paragraph isn't in the top five. Searching with the canonical question as well is the
+    obvious next step; it wasn't done here because it would have been a fix chosen by looking at a
+    held-out failure.
+  - *Date not understood (1).* "The Fed's last meeting of 2023" resolves to the whole year. The date
+    resolver reads dates, months and years, not ordinals.
+- **Routing only has four intents.** A question that mixes two ("was it unanimous, and what was the
+  range?") gets one of them.
+- **The held-out set is small and has one author** (see Results). 81% on 37 questions is an estimate
+  with a wide interval, not a guarantee.
 - The extractive reader can only quote, so answers are sentences from the statement, not syntheses.
   The Bedrock answerer writes free-form answers, but it isn't part of the CI gate.
 - The corpus is policy statements only, not minutes, press-conference transcripts or projections.
