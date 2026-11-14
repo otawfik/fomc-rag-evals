@@ -6,6 +6,9 @@
   "accuracy_decision": 0.95,
   "accuracy_dissent": 0.95,
   "heldout_hit@1": 0.9,
-  "heldout_accuracy": 0.5,
+  "heldout_accuracy": 0.75,
+  "heldout_expanded_hit@1": 0.9,
+  "heldout_expanded_accuracy": 0.7,
+  "dev_accuracy": 0.85,
   "p95_ms": 3000
 }

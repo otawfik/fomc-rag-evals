@@ -10,8 +10,8 @@ Golden set: 108 questions over 47 FOMC statements (242 chunks), answerer `extrac
 | accuracy_dissent | 0.429 | 1.0 |
 | accuracy_range | 0.234 | 1.0 |
 | cited_right | 0.241 | 1.0 |
-| p50_ms | 169.4 | 131.1 |
-| p95_ms | 414.6 | 198.8 |
+| p50_ms | 181.6 | 140.7 |
+| p95_ms | 225.9 | 241.1 |
 
 Held-out phrasings, the original set, 12 hand-written questions: accuracy 0.917 (decision 0.75 / dissent 1.0 / range 1.0), hit@1 1.0, cited_right 1.0.
 
