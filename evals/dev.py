@@ -9,6 +9,8 @@ they only check that the router leaves them alone.
 
     python -m evals.dev      # routing accuracy and answer accuracy, keyword router vs semantic
 """
+import sys
+
 from fomc.ingest import load
 
 # (question, meeting, kind)
@@ -65,3 +67,41 @@ def items() -> list[dict]:
         gold = {"range": f["range"], "decision": f["decision"], "dissent": f["dissents"]}[kind]
         out.append({"id": f"dev-{kind}-{day}", "kind": kind, "question": q, "doc_id": f"fomc-{day}", "gold": gold})
     return out
+
+
+def main() -> int:
+    from fomc import router
+    from fomc.agent import Agent, intent, route
+    from fomc.store import build, open_store
+
+    from .golden import correct
+
+    dev = items()
+    labelled = [(it["question"], it["kind"]) for it in dev] + [(q, "other") for q in OTHER]
+    verbose = "-v" in sys.argv
+    for name, fn in (("keyword", lambda q: intent(q)[0]), ("semantic + fallback", lambda q: route(q)[0])):
+        wrong = [(q, k, fn(q)) for q, k in labelled if fn(q) != k]
+        print(f"routing, {name}: {len(labelled) - len(wrong)}/{len(labelled)} right")
+        for q, k, got in wrong if verbose else []:
+            print(f"   want {k:8} got {got:8} {q}")
+    if verbose:
+        for q, k in labelled:
+            got, s, m = router.route(q)
+            print(f"   {k:8} -> {str(got):8} score {s:.3f} margin {m:.3f}  {q}")
+
+    docs = load()
+    store = open_store()
+    build(store, docs)
+    for name, flag in (("keyword", False), ("semantic + fallback", True)):
+        a = Agent(store, [d["date"] for d in docs], semantic=flag)
+        rows = [(it, a.ask(it["question"])) for it in dev]
+        ok = [correct(it, r["answer"]) for it, r in rows]
+        print(f"answers, {name}: {sum(ok)}/{len(dev)} = {sum(ok) / len(dev):.1%}")
+        for (it, r), good in zip(rows, ok) if verbose else []:
+            if not good:
+                print(f"   {it['kind']:8} {r['trace'][0]} | {it['question']} -> {r['answer'][:110]!r}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
