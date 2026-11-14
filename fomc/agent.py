@@ -4,8 +4,10 @@
                   ▲                │
                   └──── widen ◄────┘  (nothing relevant: drop to the month, then to no filter; at most twice)
 
-resolve   routes on intent (range / decision / dissent / other) and finds which meeting(s) the question means: a full date ("December 18, 2024", "2024-12-18"),
-          a month ("March 2022") or a year, matched against the meetings actually in the store
+resolve   routes on intent (range / decision / dissent / other): by meaning first (fomc/router.py embeds the question and
+          compares it with example questions), by keyword when that isn't confident. Then finds which meeting(s) the
+          question means: a full date ("December 18, 2024", "2024-12-18"), a month ("March 2022") or a year, matched
+          against the meetings actually in the store
 retrieve  vector search, filtered to those meetings when there are any
 grade     keeps hits above a similarity floor; if none survive, widen the filter and retry
 rerank    a cross-encoder re-reads question + passage together and keeps the best two paragraphs
@@ -23,6 +25,7 @@ from typing import TypedDict
 
 from langgraph.graph import END, StateGraph
 
+from . import router
 from .llm import Answer, answerer
 from .store import Hit, Store, rerank
 
@@ -81,6 +84,18 @@ def intent(question: str) -> tuple[str, str]:
     return "other", question
 
 
+CANONICAL = {name: canonical for name, _, canonical in INTENTS}
+
+
+def route(question: str, semantic: bool = True) -> tuple[str, str, str]:
+    """(intent, the question to ask the reranker and reader, which router decided: 'semantic' | 'keyword')"""
+    if semantic:
+        kind, _, _ = router.route(question)
+        if kind:
+            return kind, CANONICAL.get(kind, question), "semantic"
+    return (*intent(question), "keyword")
+
+
 class State(TypedDict, total=False):
     question: str
     intent: str
@@ -95,10 +110,10 @@ class State(TypedDict, total=False):
 
 
 class Agent:
-    def __init__(self, store: Store, meetings: list[str], reader=None, *, dates=True, rerank=True, intents=True, vote_rule=True):
+    def __init__(self, store: Store, meetings: list[str], reader=None, *, dates=True, rerank=True, intents=True, vote_rule=True, semantic=True):
         self.store, self.meetings, self.reader = store, sorted(meetings), reader or answerer()
         # switches for the ablation in evals/ablation.py; all on in the real agent
-        self.use = {"dates": dates, "rerank": rerank, "intents": intents, "vote_rule": vote_rule}
+        self.use = {"dates": dates, "rerank": rerank, "intents": intents, "vote_rule": vote_rule, "semantic": semantic}
         g = StateGraph(State)
         g.add_node("resolve", self.resolve)
         g.add_node("retrieve", self.retrieve)
@@ -119,9 +134,9 @@ class Agent:
 
     def resolve(self, s: State) -> State:
         dates, scope = resolve_dates(s["question"], self.meetings) if self.use["dates"] else ([], "none")
-        kind, ask = intent(s["question"]) if self.use["intents"] else ("other", s["question"])
+        kind, ask, how = route(s["question"], self.use["semantic"]) if self.use["intents"] else ("other", s["question"], "off")
         return {"dates": dates, "scope": scope, "intent": kind, "ask": ask, "tries": 0,
-                "trace": [f"resolve: {kind}, {scope} {dates[:3]}{'…' if len(dates) > 3 else ''}"]}
+                "trace": [f"resolve: {kind} ({how}), {scope} {dates[:3]}{'…' if len(dates) > 3 else ''}"]}
 
     def retrieve(self, s: State) -> State:
         hits = self.store.search(s["question"], K, s["dates"] or None)
